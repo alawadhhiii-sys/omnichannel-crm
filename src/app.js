@@ -15,6 +15,24 @@ app.use(morgan(config.nodeEnv === 'development' ? 'dev' : 'combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/', (_req, res) => {
+  res.json({
+    name: 'Omnichannel CRM',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      health: '/health',
+      webhooks: {
+        whatsapp: '/api/webhooks/whatsapp',
+        instagram: '/api/webhooks/instagram',
+        telegram: '/api/webhooks/telegram',
+        messenger: '/api/webhooks/messenger',
+      },
+      salla: '/api/salla/webhook',
+    },
+  });
+});
+
 app.use('/api', routes);
 
 app.get('/health', (_req, res) => {
